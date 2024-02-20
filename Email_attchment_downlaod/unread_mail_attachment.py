@@ -33,7 +33,7 @@ time.sleep(5)
 #==================================Insert Password and submit===========================================
 password_get=driver.find_element("xpath","""/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div/div[3]/div/div[2]/div/div[3]/div/div[2]/input""")
 password_get.click()
-password_get.send_keys("farhatfalak@123")
+password_get.send_keys("")
 time.sleep(5)
 password_login=driver.find_element("xpath","""/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div/div[3]/div/div[2]/div/div[5]/div/div/div/div/input""")
 password_login.click()
