@@ -196,74 +196,57 @@ class EmailAttachmentDownload:
         self.driver.get("https://www.microsoft.com/en-us/microsoft-365/outlook/log-in")
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//html/body/div[3]/div/div[1]/div[1]/div/div/header/div/div/div[4]/div[2]/div/a/div"))).click()
 
-        input_email = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div[3]/div/div/div/div[2]/div[2]/div/input[1]')))
+        input_email = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="i0116"]')))
         input_email.send_keys(self.email)
 
         button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div[3]/div/div/div/div[4]/div/div/div/div/input')))
         button.click()
 
-<<<<<<< HEAD
-#==================================Insert Password and submit===========================================
-password_get=driver.find_element("xpath","""/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div/div[3]/div/div[2]/div/div[3]/div/div[2]/input""")
-password_get.click()
-password_get.send_keys("")
-time.sleep(5)
-password_login=driver.find_element("xpath","""/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div/div[3]/div/div[2]/div/div[5]/div/div/div/div/input""")
-password_login.click()
-=======
         password_get = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div/div[3]/div/div[2]/div/div[3]/div/div[2]/input')))
         password_get.send_keys(self.password)
->>>>>>> e739006 (updated)
 
         password_login = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/form[1]/div/div/div[2]/div[1]/div/div/div/div[2]/div/div[3]/div/div[2]/div/div[5]/div/div/div/div/input')))
         password_login.click()
 
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div[2]/div[1]/div/div/div/div/div[2]/div[2]/div/div/form/div[3]/div[2]/div/div[2]/button'))).click()
-        # time.sleep(5000000)
 
     def unread_mail_filter(self):
         # Click on the filter menu
         filter_menu = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="mailListFilterMenu"]')))
         filter_menu.click()
-
+        time.sleep(10)
         # Click on the filter button
         filter_button_click = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span.fui-MenuItemRadio__icon > i')))
         filter_button_click.click()
-        
-        # Wait for the full unread inbox container to be visible
-        full_unread_inbox = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="MailList"]/div/div/div/div')))
 
         # # Wait for unread messages to be visible within the inbox container
-        # unread_msg_read_onebyone = WebDriverWait(full_unread_inbox, 10).until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "EeHm8")))
-
-        # # Iterate over each unread message element to access its inner HTML content
-        # for element in unread_msg_read_onebyone:
-        elements = WebDriverWait(full_unread_inbox, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "EeHm8")))
+        unread_msg_read_onebyone = WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '#MailList > div > div > div > div > div > div > div > div:nth-child(2) > div')))
 
         # Click on each element
-        for element in elements:
+        for element in unread_msg_read_onebyone:
             print(element.get_attribute("innerHTML"))
+            print("=========================================================")
 
-        # # Iterate through unread messages
-        # for message in unread_msg_read_onebyone:
-        #     try:
-        #         # Click on the message
-        #         message.click()
+        # Iterate through unread messages
+        for message in unread_msg_read_onebyone:
+            try:
+                # Click on the message
+                message.click()
                 
-        #         # Get the attachment name
-        #         attachment_name_extract = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="ConversationReadingPaneContainer"]/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div/div/div/div[1]/div/div/div[1]')))
-        #         print(attachment_name_extract.text)
+                # Get the attachment name
+                attachment_name_extract = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="ConversationReadingPaneContainer"]/div[2]/div/div[2]/div[1]/div/div/div/div/div[2]/div/div/div/div/div/div/div[1]/div/div/div[1]')))
+                print(attachment_name_extract.text)
 
-        #         # Click on the attachment icon
-        #         attachment_icon = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.o4euS > button > span')))
-        #         attachment_icon.click()
+                # Click on the attachment icon
+                attachment_icon = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.o4euS > button > span')))
+                attachment_icon.click()
 
-        #         # Click on the download button
-        #         attachment_download = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.fluent-default-layer-host > div > div > ul > li:nth-child(3) > button > div > i')))
-        #         attachment_download.click()
+                # Click on the download button
+                attachment_download = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.fluent-default-layer-host > div > div > ul > li:nth-child(3) > button > div > i')))
+                attachment_download.click()
 
-        #     except Exception as e:
-        #         print("Attachment not found:", e)
+            except Exception as e:
+                print("Attachment not found:", e)
     def close_driver(self):
         self.driver.quit()
 
